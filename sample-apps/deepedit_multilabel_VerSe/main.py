@@ -104,15 +104,8 @@ class MyApp(MONAILabelApp):
         self.planner = HeuristicPlanner(spatial_size=spatial_size, target_spacing=target_spacing)
 
         self.model_dir = os.path.join(app_dir, "model")
-        self.pretrained_model = "None"
-        self.final_model = "/mnt/data/mmodat/Spine/RB_VerSe_UNet_final.pth"
-
-        use_pretrained_model = False
-        pretrained_model_uri = None
-
-        # Path to pretrained weights
-        if use_pretrained_model:
-            self.download([(self.pretrained_model, pretrained_model_uri)])
+        self.pretrained_model = studies +  "RB_VerSe_UNet.pth"
+        self.final_model = studies +  "RB_VerSe_UNet.pth"
 
         self.epistemic_enabled = strtobool(conf.get("epistemic_enabled", "false"))
         self.epistemic_samples = int(conf.get("epistemic_samples", "5"))
