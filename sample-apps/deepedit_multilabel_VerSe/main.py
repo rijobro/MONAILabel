@@ -104,8 +104,8 @@ class MyApp(MONAILabelApp):
         self.planner = HeuristicPlanner(spatial_size=spatial_size, target_spacing=target_spacing)
 
         self.model_dir = os.path.join(app_dir, "model")
-        self.pretrained_model = studies +  "RB_VerSe_UNet.pth"
-        self.final_model = studies +  "RB_VerSe_UNet.pth"
+        self.pretrained_model = os.path.join(studies, "RB_VerSe_UNet.pth")
+        self.final_model = self.pretrained_model
 
         self.epistemic_enabled = strtobool(conf.get("epistemic_enabled", "false"))
         self.epistemic_samples = int(conf.get("epistemic_samples", "5"))
