@@ -215,6 +215,26 @@ class TensorBoardImageHandler:
                 tag="step_" + str(step) + "_all_clicks_" + filename,
             )
 
+        # Preds and Clicks
+        show_pred_and_clicks = input_tensor[1:, ...]
+        if isinstance(show_pred_and_clicks, torch.Tensor):
+            show_pred_and_clicks = show_pred_and_clicks.detach().cpu().numpy()
+            # Printing labels
+            for j in range(0, show_pred_and_clicks.shape[0] - 1, 2):
+                # Only plot the ones that have clicks
+                if show_pred_and_clicks[j + 1, ...].max() > 0.5:
+                    # Adding preds and clicks in single tensor
+                    tmp_tensor = np.sum(show_pred_and_clicks[j : j + 2, ...], axis=0)[None]
+                    plot_2d_or_3d_image(
+                        data=tmp_tensor[None],
+                        step=step,
+                        writer=self._writer,
+                        index=0,
+                        max_channels=self.max_channels,
+                        max_frames=self.max_frames,
+                        tag="step_" + str(step) + f"_pred_and_clicks_label_{j}" + filename,
+                    )
+
         self._writer.flush()
 
     def close(self):
