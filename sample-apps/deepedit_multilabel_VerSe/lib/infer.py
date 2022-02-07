@@ -24,6 +24,8 @@ from monai.transforms import (
     CropForegroundd,
     DivisiblePadd,
     ScaleIntensityd,
+    FillHolesd,
+    KeepLargestConnectedComponentd,
 )
 
 from monailabel.deepedit.multilabel.transforms import (
@@ -94,6 +96,8 @@ class DeepEditSeg(InferTask):
             Activationsd(keys="pred", softmax=True),
             AsDiscreted(keys="pred", argmax=True),
             SqueezeDimd(keys="pred", dim=0),
+            FillHolesd(keys="pred"),
+            KeepLargestConnectedComponentd(keys="pred"),
             ToNumpyd(keys="pred"),
             Restored(keys="pred", ref_image="image"),
         ]
